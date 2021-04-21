@@ -52,7 +52,6 @@ def evaluate_model(X,y):
         # prepare data
         X_train, X_test = X[train_ix], X[test_ix]
         y_train, y_test = y[train_ix], y[test_ix]
-        # define model
         # fit model
         model.fit(X_train, y_train, verbose=0, epochs=200)
         # evaluate model on test set
@@ -60,7 +59,6 @@ def evaluate_model(X,y):
         # store result
         print(mae)
         results.append(mae)
-    #print(results)
     return model
 
 def save_model(model,model_name):
@@ -81,17 +79,11 @@ oresult_test_input=iomodule.result_list()
 oresult_test_output=iomodule.result_list()
 file_name="database.txt"
 get_DL_data(oresult_train_input,oresult_train_output,oresult_test_input,oresult_test_output,file_name)
-#NN_model=evaluate_model(np.asarray(oresult_train_input.data), np.asarray(oresult_train_output.data))
-#save_model(NN_model,"30_30")
+NN_model=evaluate_model(np.asarray(oresult_train_input.data), np.asarray(oresult_train_output.data))
+save_model(NN_model,"30_30")
 NN_model=load_model("30_30")
 newX=np.asarray(oresult_test_input.data)
 newY=NN_model.predict(newX)
 iomodule.Two_D_Array_Contour_Show(iomodule.reconstruct_2D_array(newX[1]))
 iomodule.Two_D_Array_Contour_Show(iomodule.reconstruct_2D_array(oresult_test_output.data[1]))
 iomodule.Two_D_Array_Contour_Show(iomodule.reconstruct_2D_array(newY[1]))
-#iomodule.Two_D_Array_Contour_Show(oresult_test_input.data[10])
-#iomodule.Two_D_Array_Contour_Show(oresult_test_output.data[10])
-#ML_model=get_model(len(oresult_train_input.data[0]),len(oresult_train_input.data))
-#train data should be numpy not list
-#ML_model.fit(np.asarray(oresult_train_input.data), np.asarray(oresult_train_output.data), verbose=0, epochs=100)
-#mae = ML_model.evaluate(np.asarray(oresult_test_input.data), np.asarray(oresult_test_output.data), verbose=0)
